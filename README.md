@@ -1,0 +1,40 @@
+# Plant Recognition Project  
+
+This french project is divided into two repositories available on my GitHub:  
+
+1. **Frontend**: React Native application for plant identification  
+2. **Backend**: Flask API with PostgreSQL database  
+
+Both repositories contain full commit history.  
+
+## Technologies Used  
+
+- **Frontend**: React Native, Axios, React Navigation  
+- **Backend**: Flask (Python), PostgreSQL, Docker  
+- **APIs**: Plant.id for plant recognition  
+
+## Getting Started  
+
+This repository contains two folders:  
+
+- `Front/` → React Native project  
+- `Back/` → Flask backend  
+
+Follow the **readme** inside each folder to install dependencies and run the project (in french).
+
+## Known Limitations & Security  
+
+This is a university project built to run on a local network for a demo. It is **not production-ready**. A security review of the code found these issues:  
+
+- **No real authentication**: after login, the API trusts the `user_id` the client sends. Any client can read, add or delete another user's history, and `user_id = 1` returns every user's history.  
+- **Plain HTTP**: passwords, photos and GPS coordinates travel unencrypted.  
+- **Exposed database**: `docker-compose.yml` publishes PostgreSQL on port 5432 to the host network.  
+- **No abuse protection**: no rate limiting (login, Plant.id proxy), no request size limit, no timeout on the Plant.id call.  
+- **Verbose errors**: raw exception messages, including database errors, are returned to the client.  
+- **Development server**: the API runs on Flask's built-in server instead of a WSGI server such as gunicorn.  
+
+**What is already handled**: every SQL query is parameterized (no SQL injection), passwords are hashed with scrypt, and secrets are loaded from a `.env` file that git ignores.  
+
+A production version would add token-based authentication (JWT or signed sessions) with ownership checks on every query, put the API behind a TLS reverse proxy, keep the database on Docker's internal network only, and add rate limiting, input size limits and generic error responses.  
+
+---
