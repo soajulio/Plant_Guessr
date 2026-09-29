@@ -2,10 +2,14 @@
 
 This french project is divided into two repositories available on my GitHub:  
 
-1. **Frontend**: React Native application for plant identification  
-2. **Backend**: Flask API with PostgreSQL database  
+1. **Frontend**: React Native application for plant identification → [Anclin_Soares_SAE_Front](https://github.com/soajulio/Anclin_Soares_SAE_Front)  
+2. **Backend**: Flask API with PostgreSQL database → [Anclin_Soares_SAE_Back](https://github.com/soajulio/Anclin_Soares_SAE_Back)  
 
 Both repositories contain full commit history.  
+
+## Team  
+
+Built as a two-person university project by **Ethan Anclin** and **Julio Soares**.  
 
 ## Technologies Used  
 
@@ -32,9 +36,10 @@ This is a university project built to run on a local network for a demo. It is *
 - **No abuse protection**: no rate limiting (login, Plant.id proxy), no request size limit, no timeout on the Plant.id call.  
 - **Verbose errors**: raw exception messages, including database errors, are returned to the client.  
 - **Development server**: the API runs on Flask's built-in server instead of a WSGI server such as gunicorn.  
+- **Default admin account**: `init.sql` creates an `admin` user with a hardcoded demo password.  
 
 **What is already handled**: every SQL query is parameterized (no SQL injection), passwords are hashed with scrypt, and secrets are loaded from a `.env` file that git ignores.  
 
-A production version would add token-based authentication (JWT or signed sessions) with ownership checks on every query, put the API behind a TLS reverse proxy, keep the database on Docker's internal network only, and add rate limiting, input size limits and generic error responses.  
+A production version would add token-based authentication (JWT or signed sessions) with ownership checks on every query, create the admin account from an environment variable instead of a hardcoded password, run the API with gunicorn behind a TLS reverse proxy, keep the database on Docker's internal network only, and add rate limiting, input size limits and generic error responses.  
 
 ---
