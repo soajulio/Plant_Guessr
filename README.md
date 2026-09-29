@@ -30,7 +30,7 @@ Follow the **readme** inside each folder to install dependencies and run the pro
 
 This is a university project built to run on a local network for a demo. It is **not production-ready**. A security review of the code found these issues:  
 
-- **No real authentication**: after login, the API trusts the `user_id` the client sends. Any client can read, add or delete another user's history, and `user_id = 1` returns every user's history.  
+- **No real authentication**: the API has no session or token and trusts the `user_id` the client sends. Any client can read, add or delete another user's history, and `user_id = 1` returns every user's history.  
 - **Plain HTTP**: passwords, photos and GPS coordinates travel unencrypted.  
 - **Exposed database**: `docker-compose.yml` publishes PostgreSQL on port 5432 to the host network.  
 - **No abuse protection**: no rate limiting (login, Plant.id proxy), no request size limit, no timeout on the Plant.id call.  
@@ -41,5 +41,7 @@ This is a university project built to run on a local network for a demo. It is *
 **What is already handled**: every SQL query is parameterized (no SQL injection), passwords are hashed with scrypt, and secrets are loaded from a `.env` file that git ignores.  
 
 A production version would add token-based authentication (JWT or signed sessions) with ownership checks on every query, create the admin account from an environment variable instead of a hardcoded password, run the API with gunicorn behind a TLS reverse proxy, keep the database on Docker's internal network only, and add rate limiting, input size limits and generic error responses.  
+
+*This security review was carried out with the help of Claude (Anthropic), then checked against the code.*  
 
 ---
